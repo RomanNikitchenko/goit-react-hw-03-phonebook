@@ -56,20 +56,27 @@ class App extends React.Component {
     });
   };
 
-  //Жизненный циклы компонента 
+  //Жизненные циклы компонента
+
+  //при первой загрузки получаем данные из локального хранилища
   componentDidMount() {
-    console.log('// при первой загрузки')
+    const contactsFromLocalStorage = localStorage.getItem('contacts');
+    const parsedTodos = JSON.parse(contactsFromLocalStorage);
+
+    if (parsedTodos) {
+      this.setState({contacts: parsedTodos});
+    }
   };
 
+  // каждый раз при изменении компонента перезаписываем в локальное хранилище
   componentDidUpdate(prevProps, prevState) {
-    console.log('// каждый раз при изменения компонента');
-    console.log(prevState);
-    console.log(this.state);
-  }
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    };
+  };
 
   render() {
     const { filter } = this.state;
-    console.log('// render');
 
     return (
       <div>
