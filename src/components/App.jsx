@@ -15,7 +15,8 @@ class App extends React.Component {
     filter: '',
   };
 
-  addContact = ({ name, number }) => {
+  addContact = (name, number) => {
+    console.log(name, number);
     const contact = {
       id: nanoid(),
       name: name,
@@ -29,8 +30,8 @@ class App extends React.Component {
     contactsName.includes(contact.name.toLowerCase())
       ? alert(`${contact.name} is already in contacts.`)
       : this.setState(({ contacts }) => ({
-        contacts: [contact, ...contacts],
-      }));
+          contacts: [contact, ...contacts],
+        }));
   };
 
   filterChange = evt => {
@@ -49,9 +50,11 @@ class App extends React.Component {
   };
 
   deleteContact = contactId => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+        contacts: prevState.contacts.filter(
+          contact => contact.id !== contactId
+        ),
       };
     });
   };
@@ -64,16 +67,16 @@ class App extends React.Component {
     const parsedTodos = JSON.parse(contactsFromLocalStorage);
 
     if (parsedTodos) {
-      this.setState({contacts: parsedTodos});
+      this.setState({ contacts: parsedTodos });
     }
-  };
+  }
 
   // каждый раз при изменении компонента перезаписываем в локальное хранилище
   componentDidUpdate(prevProps, prevState) {
     if (this.state.contacts !== prevState.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    };
-  };
+    }
+  }
 
   render() {
     const { filter } = this.state;
