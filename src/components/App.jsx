@@ -15,8 +15,7 @@ class App extends React.Component {
     filter: '',
   };
 
-  addContact = (name, number) => {
-    console.log(name, number);
+  addContact = ({name, number}) => {
     const contact = {
       id: nanoid(),
       name: name,
